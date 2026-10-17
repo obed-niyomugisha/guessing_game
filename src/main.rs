@@ -11,20 +11,9 @@ fn main() {
 
     loop {
         let secret_number = rand::rng().random_range(MIN_NUM..=MAX_NUM);
-        let mut guesses = 0;
 
-        loop {
-            if guesses >= MAX_GUESSES {
-                println!("\nYou've run out of guesses!");
-                println!("The secret number was {}.", secret_number);
-                break;
-            }
-
-            println!(
-                "\n[{}/{}] Please input your guess.",
-                guesses + 1,
-                MAX_GUESSES
-            );
+        for i in 1..=MAX_GUESSES {
+            println!("\n[{i}/{MAX_GUESSES}] Please input your guess.");
             let mut guess = String::new();
 
             io::stdin()
@@ -50,7 +39,10 @@ fn main() {
                 }
             };
 
-            guesses += 1;
+            if i == MAX_GUESSES {
+                println!("\nYou've run out of guesses!");
+                println!("The secret number was {}.", secret_number);
+            }
         }
 
         print!("\nWould you like to play again [Y/n]?: ");

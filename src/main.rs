@@ -12,6 +12,7 @@ fn main() {
     loop {
         if guesses >= MAX_GUESSES {
             println!("\nYou've run out of guesses!");
+            println!("The secret number was {}.", secret_number);
             break;
         }
 

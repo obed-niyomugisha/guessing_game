@@ -3,12 +3,14 @@ use std::cmp::Ordering;
 use std::io::{self, Write};
 
 const MAX_GUESSES: u8 = 5;
+const MIN_NUM: u32 = 1;
+const MAX_NUM: u32 = 100;
 
 fn main() {
-    println!("Guess the number between 1 and 100!");
+    println!("Guess the number between {MIN_NUM} and {MAX_NUM}!");
 
     loop {
-        let secret_number = rand::rng().random_range(1..=100);
+        let secret_number = rand::rng().random_range(MIN_NUM..=MAX_NUM);
         let mut guesses = 0;
 
         loop {
@@ -30,9 +32,11 @@ fn main() {
                 .expect("Failed to read your guess");
 
             let guess: u32 = match guess.trim().parse() {
-                Ok(num) if num >= 1 && num <= 100 => num,
+                Ok(num) if num >= MIN_NUM && num <= MAX_NUM => num,
                 _ => {
-                    println!("Invalid input. Please enter a number between 1 and 100.");
+                    println!(
+                        "Invalid input. Please enter a number between {MIN_NUM} and {MAX_NUM}."
+                    );
                     continue;
                 }
             };

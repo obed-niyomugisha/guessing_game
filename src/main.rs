@@ -2,12 +2,24 @@ use rand::prelude::*;
 use std::cmp::Ordering;
 use std::io;
 
+const MAX_GUESSES: u8 = 5;
+
 fn main() {
     println!("Guess the number between 1 and 100!");
     let secret_number = rand::rng().random_range(1..=100);
+    let mut guesses = 0;
 
     loop {
-        println!("\nPlease input your guess.");
+        if guesses >= MAX_GUESSES {
+            println!("\nYou've run out of guesses!");
+            break;
+        }
+
+        println!(
+            "\n[{}/{}] Please input your guess.",
+            guesses + 1,
+            MAX_GUESSES
+        );
         let mut guess = String::new();
 
         io::stdin()
@@ -27,5 +39,7 @@ fn main() {
                 break;
             }
         };
+
+        guesses += 1;
     }
 }

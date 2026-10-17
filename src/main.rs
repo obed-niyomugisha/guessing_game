@@ -3,12 +3,12 @@ use rand::prelude::*;
 use std::cmp::Ordering;
 use utils::*;
 
-const MAX_GUESSES: u8 = 5;
-const MIN_NUM: u8 = 1;
-const MAX_NUM: u8 = 100;
+const MAX_ATTEMPTS: u8 = 5;
+const MIN_NUMBER: u8 = 1;
+const MAX_NUMBER: u8 = 100;
 
 fn main() {
-    println!("Guess the number between {MIN_NUM} and {MAX_NUM}!");
+    println!("Guess the number between {MIN_NUMBER} and {MAX_NUMBER}!");
 
     loop {
         play_round();
@@ -21,9 +21,9 @@ fn main() {
 }
 
 fn play_round() {
-    let secret_number = rand::rng().random_range(MIN_NUM..=MAX_NUM);
+    let secret_number = rand::rng().random_range(MIN_NUMBER..=MAX_NUMBER);
 
-    for attempt in 1..=MAX_GUESSES {
+    for attempt in 1..=MAX_ATTEMPTS {
         match read_guess(attempt).cmp(&secret_number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too large!"),
@@ -33,20 +33,22 @@ fn play_round() {
             }
         }
 
-        if attempt == MAX_GUESSES {
+        if attempt == MAX_ATTEMPTS {
             println!("\nYou've run out of guesses!");
-            println!("The secret number was {}.", secret_number);
+            println!("The secret number was {secret_number}.",);
         }
     }
 }
 
 fn read_guess(attempt: u8) -> u8 {
     loop {
-        println!("\n[{attempt}/{MAX_GUESSES}] Please input your guess.");
+        println!("\n[{attempt}/{MAX_ATTEMPTS}] Please input your guess.");
 
         match input().parse() {
-            Ok(num) if (MIN_NUM..=MAX_NUM).contains(&num) => return num,
-            _ => println!("Invalid input. Please enter a number between {MIN_NUM} and {MAX_NUM}."),
+            Ok(num) if (MIN_NUMBER..=MAX_NUMBER).contains(&num) => return num,
+            _ => println!(
+                "Invalid input. Please enter a number between {MIN_NUMBER} and {MAX_NUMBER}."
+            ),
         }
     }
 }

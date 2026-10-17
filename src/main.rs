@@ -55,8 +55,6 @@ fn main() {
 
         if play_again.trim() == "n" {
             break;
-        } else {
-            continue;
         }
     }
 }

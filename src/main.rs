@@ -1,7 +1,6 @@
-mod utils;
 use rand::prelude::*;
 use std::cmp::Ordering;
-use utils::*;
+use std::io::{self, Write};
 
 const MAX_ATTEMPTS: u8 = 5;
 const MIN_NUMBER: u8 = 1;
@@ -13,11 +12,24 @@ fn main() {
     loop {
         play_round();
 
-        let play_again = input_with_message("\nWould you like to play again [Y/n]?: ");
+        let play_again = input("\nWould you like to play again [Y/n]?: ");
         if play_again.to_lowercase() == "n" {
             break;
         }
     }
+}
+
+fn input(message: &str) -> String {
+    print!("{message}");
+    io::stdout().flush().expect("Failed to flush stdout");
+
+    let mut line = String::new();
+
+    io::stdin()
+        .read_line(&mut line)
+        .expect("Failed to read line");
+
+    line.trim().to_string()
 }
 
 fn play_round() {
@@ -44,7 +56,7 @@ fn read_guess(attempt: u8) -> u8 {
     loop {
         println!("\n[{attempt}/{MAX_ATTEMPTS}] Please input your guess.");
 
-        match input_with_message("> ").parse() {
+        match input("> ").parse() {
             Ok(num) if (MIN_NUMBER..=MAX_NUMBER).contains(&num) => return num,
             _ => println!(
                 "Invalid input. Please enter a number between {MIN_NUMBER} and {MAX_NUMBER}."

@@ -1,6 +1,6 @@
 use rand::prelude::*;
 use std::cmp::Ordering;
-use std::io;
+use std::io::{self, Write};
 
 const MAX_GUESSES: u8 = 5;
 
@@ -30,8 +30,11 @@ fn main() {
                 .expect("Failed to read your guess");
 
             let guess: u32 = match guess.trim().parse() {
-                Ok(num) => num,
-                Err(_) => continue,
+                Ok(num) if num >= 1 && num <= 100 => num,
+                _ => {
+                    println!("Invalid input. Please enter a number between 1 and 100.");
+                    continue;
+                }
             };
 
             match guess.cmp(&secret_number) {
@@ -46,7 +49,8 @@ fn main() {
             guesses += 1;
         }
 
-        println!("\nWould you like to play again [Y/n]?");
+        print!("\nWould you like to play again [Y/n]?: ");
+        io::stdout().flush().expect("Failed to flush stdout");
         let mut play_again = String::new();
 
         io::stdin()

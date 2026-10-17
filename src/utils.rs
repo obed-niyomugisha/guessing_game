@@ -1,13 +1,13 @@
 use std::io::{self, Write};
 
 pub fn input() -> String {
-    let mut input = String::new();
+    let mut line = String::new();
 
     io::stdin()
-        .read_line(&mut input)
+        .read_line(&mut line)
         .expect("Failed to read line");
 
-    input.trim().to_string()
+    line.trim().to_string()
 }
 
 pub fn input_with_message(message: &str) -> String {

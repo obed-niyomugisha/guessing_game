@@ -32,7 +32,7 @@ fn main() {
                 .expect("Failed to read your guess");
 
             let guess: u32 = match guess.trim().parse() {
-                Ok(num) if num >= MIN_NUM && num <= MAX_NUM => num,
+                Ok(num) if (MIN_NUM..=MAX_NUM).contains(&num) => num,
                 _ => {
                     println!(
                         "Invalid input. Please enter a number between {MIN_NUM} and {MAX_NUM}."

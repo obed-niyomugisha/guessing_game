@@ -44,7 +44,7 @@ fn read_guess(attempt: u8) -> u8 {
     loop {
         println!("\n[{attempt}/{MAX_ATTEMPTS}] Please input your guess.");
 
-        match input().parse() {
+        match input_with_message("> ").parse() {
             Ok(num) if (MIN_NUMBER..=MAX_NUMBER).contains(&num) => return num,
             _ => println!(
                 "Invalid input. Please enter a number between {MIN_NUMBER} and {MAX_NUMBER}."

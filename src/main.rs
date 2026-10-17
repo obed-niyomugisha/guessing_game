@@ -1,9 +1,8 @@
 mod utils;
-use utils::input;
+use utils::*;
 
 use rand::prelude::*;
 use std::cmp::Ordering;
-use std::io::{self, Write};
 
 const MAX_GUESSES: u8 = 5;
 const MIN_NUM: u32 = 1;
@@ -17,9 +16,8 @@ fn main() {
 
         for i in 1..=MAX_GUESSES {
             println!("\n[{i}/{MAX_GUESSES}] Please input your guess.");
-            let guess = input();
 
-            let guess: u32 = match guess.parse() {
+            let guess: u32 = match input().parse() {
                 Ok(num) if (MIN_NUM..=MAX_NUM).contains(&num) => num,
                 _ => {
                     println!(
@@ -44,11 +42,7 @@ fn main() {
             }
         }
 
-        print!("\nWould you like to play again [Y/n]?: ");
-        io::stdout().flush().expect("Failed to flush stdout");
-        let play_again = input();
-
-        if play_again == "n" {
+        if input_with_message("\nWould you like to play again [Y/n]?: ") == "n" {
             break;
         }
     }

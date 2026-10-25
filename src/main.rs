@@ -106,9 +106,14 @@ fn input(message: &str) -> String {
 
     let mut line = String::new();
 
-    io::stdin()
+    let bytes_read = io::stdin()
         .read_line(&mut line)
         .expect("Failed to read line");
+
+    if bytes_read == 0 {
+        println!("\nInput closed. Goodbye!");
+        std::process::exit(0);
+    }
 
     line.trim().to_string()
 }

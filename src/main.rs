@@ -5,10 +5,21 @@ use std::io::{self, Write};
 const MIN_NUMBER: u8 = 1;
 
 fn main() {
-    let game = Game::new(&Difficulty::Easy);
+    println!("Choose level: ");
+    println!("1. Easy");
+    println!("2. Medium (Default)");
+    println!("3. Hard\n");
+
+    let level = match input("> ").parse() {
+        Ok(1) => Difficulty::Easy,
+        Ok(3) => Difficulty::Hard,
+        _ => Difficulty::Medium,
+    };
+
+    let game = Game::new(&level);
 
     println!(
-        "Guess the number between {MIN_NUMBER} and {}!",
+        "\nGuess the number between {MIN_NUMBER} and {}!",
         game.max_number
     );
 
